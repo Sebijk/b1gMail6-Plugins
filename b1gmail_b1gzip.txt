@@ -1,0 +1,55 @@
+#################################################
+  b1gMail ZIP-Funktion durch b1gZIP ersetzen
+  für das b1gMail 6.3.1
+  Hack Geschrieben von Sebijk
+  Version 1.0
+  http://www.sebijk.com
+#################################################
+
+Dieser Hack ersetzt die normalen b1gMail Zip-Funktionen
+durch die von b1gZip. Der Vorteil an b1gZIP ist,
+dass die Generierung von ZIP-Archiven von b1gZIP
+deutlich schneller ist und die Komprimierungsrate
+ist besser, als die von den Funktionen von b1gMail.
+
+Hinweis: Damit dieser Hack funktioniert, müsst ihr
+b1gZIP als PHP-Modul über die php.ini eingebunden
+haben, sonst gibt es eine Fehlermeldung.
+
+-------------------------------------
+Dateien, die geändert werden müssen:
+-------------------------------------
+lib/functions.inc.php
+-------------------------------------
+
+
+Suchen Sie in der lib/functions.inc.php nach (ohne die Bindestriche):
+--------------------------------------------------
+
+function ZIPMails($ids) {
+	if (!count($ids) < 1) {
+		$archiv = new zipfile();
+		while(list($key, $val) = each($ids)) {
+			$archiv->addFile(GetMSGBody($key), FName($val) . " (" . $key . ").eml");
+		}
+		return ($archiv->file());
+	}
+	return false;
+}
+
+ersetzen Sie dies mit (ohne die Bindestriche):
+--------------------------------------------------
+/** b1gZIP Funktionen **/
+function ZIPMails($ids) {
+	if(!extension_loaded("b1gzip")) return die("Fehler: b1gZip ist auf diesem System nicht installiert!");
+	if (!count($ids) < 1) {
+		$archiv = b1gzip_create();
+		while(list($key, $val) = each($ids)) {
+			b1gzip_add($archiv, GetMSGBody($key), FName($val) . " (" . $key . ").eml");
+		}
+		return b1gzip_final($archiv);
+	}
+	return false;
+}
+/** Ende b1gZIP Funktionen **/
+--------------------------------------------------

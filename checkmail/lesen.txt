@@ -1,0 +1,33 @@
++------------------------------------------+
+|CheckMail Version 1.2					   |
+|Original Autor: Haggi0505 (ph234@web.de)  |
+|Optimized by Sebijk (http://www.sebijk.de)|
++------------------------------------------+
+
+1.) Laden Sie die Dateien im Ordner "modules" in Ihrem b1gMail-Modulverzeichnis hoch.
+2.) Laden Sie die Templates im Ordner "templates in Ihrem jeweiligen Templateordner hoch.
+3.) Aktivieren Sie im Admin-bereich das Modul CheckMail!
+
+Achten Sie, dass Checkmail v1.0 im Admin-Bereich deaktiviert werden muss, damit die
+unnötigen Tabellen für checkmail entfernt werden.
+
++-----------------+
+|Versions-History:|
++-----------------+
+
+Version 1.2
+ - checkmail.php und checkmail.extension.php zusammengeführt
+ - Code wurde nochmals stark optimiert
+ - Template checkmailextern.tpl überarbeitet
+ - checkmail.php und checkmail.tpl entfernt
+
+Version 1.1
+ - Optimierte Version von Sebijk
+ - checkmail.php und checkmail.extension.php optimiert
+ - Popup-Fenster wird beim Klick sofort aufgerufen
+
+Version 1.0 Fixed 01
+- checkmailextern.tpl wurde für eine 24Std. Anzeige geändert!
+
+Version 1.0
+- Erste Version von Haggi0505

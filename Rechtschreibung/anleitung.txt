@@ -1,0 +1,65 @@
+----------------------------------------------------
+Google Rechtschreibprüfung Version 1.0 für b1gMail
+Getestet mit: b1gMail 6.3.1
+Original Hack: WBB Rechtschreibprüfung von YooMe.de
+----------------------------------------------------
+
+Dieses Addon ersetzt die b1gMail-Rechtschreibprüfung (falls installiert)
+durch die Rechtschreibprüfung von Google. Vorteil daran ist, dass es mehrere 
+Sprachen auswählen kann, als die von b1gMail integrierte Rechtschreibprüfung.
+Zudem kann man die words-Tabelle in der b1gMail-Datenbank löschen, womit man ca. 23 MB 
+Speicherplatz gewinnen kann.
+
+Dateien, die geändert werden müssen:
+-----------------------------------------
+templates/**ihrtemplate**/compose.tpl
+templates/**ihrtemplate**/index.tpl
+
+
+1. Laden Sie alle Dateien auf dem Webspace hoch.
+
+2. Suchen Sie in templates/**ihrtemplate**/index.tpl nach:
+-----------------------------------
+<script src="lib/dtree.js" language="javascript" type="text/javascript"></script>
+-----------------------------------
+und fügen Sie darunter:
+-----------------------------------
+  <script type="text/javascript" src="googiespell/AJS.js"></script>
+  <script type="text/javascript" src="googiespell/googiespell.js"></script>
+  <script type="text/javascript" src="googiespell/cookiesupport.js"></script>
+  <link href="googiespell/googiespell.css" rel="stylesheet" type="text/css" />
+-----------------------------------
+
+2.1 Suchen Sie in templates/**ihrtemplate**/compose.tpl nach:
+-------------------------------------------------------------
+{if $IfTXT}<a href="javascript:void(0);" onclick="spellcheck('{$sid}');">{$lang_spellcheck}</a>{/if}
+-------------------------------------------------------------
+
+und löschen Sie das.
+
+Suchen Sie weiter nach:
+-----------------------
+{$txt}
+-----------------------
+und fügen Sie darunter:
+-----------------------------------
+
+ {if $IfTXT}<span class="normalfont"><script type="text/javascript" src="googiespell/b1gmail_googiespell.js"></script></span>{/if}
+
+-----------------------------------
+
+Fertig.
+
+----------------------------------------------
+
+Wenn man außer Deutsch und Englisch, weitere Sprachen hinzufügen möchte,
+können Sie es über den JS-Code "googie.setLanguages({'de': 'Deutsch', 'en': 'English'});"
+erweitern, z.b für Französisch den Code hinter dem Code:
+
+, 'en': 'English'
+
+ am Ende:
+ 
+ ,'fr': 'Français'
+ 
+ einfügen. Die Zeile finden Sie unter googiespell/b1gmail_googiespell.js.

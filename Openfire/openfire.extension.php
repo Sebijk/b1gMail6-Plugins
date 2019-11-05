@@ -19,11 +19,31 @@ class modopenfire extends b1gMailModul
 		$this->mail				= 'sebijk@web.de';
 		$this->version			= '1.3';
 		$this->designedfor		= '6.3.1';
-		$this->admin_pages		=  true;		$this->admin_page_title	= 'Openfire';
+		$this->admin_pages		=  true;
+		$this->admin_page_title	= 'Openfire';
 	}
 	
-	// Installation	function Install()	{		global $db;		$sql = $db->Query("CREATE TABLE `{pre}mod_openfire` (				  `secretkey` varchar(255) NOT NULL default '',				  `domain` varchar(255) NOT NULL default ''				) ENGINE=MyISAM;");
-		$sql = new SQLq("INSERT INTO `{pre}mod_openfire` (`secretkey`, `domain`) VALUES ('', 'localhost');");		PutLog("Modul \"Openfire-Integration\" wurde erfolgreich installiert.", PRIO_NOTE, __FILE__, __LINE__);		return(true);	}	// Deinstallation	function Uninstall()	{		global $db;		$sql = $db->Query("DROP TABLE {pre}mod_openfire;");		PutLog("Modul \"Openfire-Integration\" wurde erfolgreich deinstalliert.", PRIO_NOTE, __FILE__, __LINE__);		return(true);	}
+	// Installation
+	function Install()
+	{
+		global $db;
+		$sql = $db->Query("CREATE TABLE `{pre}mod_openfire` (
+				  `secretkey` varchar(255) NOT NULL default '',
+				  `domain` varchar(255) NOT NULL default ''
+				) ENGINE=MyISAM;");
+		$sql = new SQLq("INSERT INTO `{pre}mod_openfire` (`secretkey`, `domain`) VALUES ('', 'localhost');");
+		PutLog("Modul \"Openfire-Integration\" wurde erfolgreich installiert.", PRIO_NOTE, __FILE__, __LINE__);
+		return(true);
+	}
+
+	// Deinstallation
+	function Uninstall()
+	{
+		global $db;
+		$sql = $db->Query("DROP TABLE {pre}mod_openfire;");
+		PutLog("Modul \"Openfire-Integration\" wurde erfolgreich deinstalliert.", PRIO_NOTE, __FILE__, __LINE__);
+		return(true);
+	}
 		
 	
 	// Jabber-Registrierungen zum Openfire Server senden
@@ -46,7 +66,6 @@ class modopenfire extends b1gMailModul
 		$receive_url = $http->DownloadToString();
  
 	}
-	
 	function OnDeleteUser($id)
 	{
 		global $db;
@@ -64,8 +83,10 @@ class modopenfire extends b1gMailModul
 		$http = new HTTPRequest($sendjabber_delete);
 		$result = $http->DownloadToString();
 	}
-	
-	// Admin-Handler	function AdminHandler()	{		
+	// Admin-Handler
+	function AdminHandler()
+	{
+		
 		If (isset($_POST['save'])) {
 			$sql = new SQLq("UPDATE {pre}mod_openfire SET domain='".$_POST['openfire_domain']."',secretkey='".$_POST['openfire_userservice_secretkey']."'");
 			$erfolg = "<br /><b>Die Daten wurden erfolgreich gespeichert!</b><br />";	
@@ -74,11 +95,13 @@ class modopenfire extends b1gMailModul
 		$sql = new SQLq("SELECT * FROM {pre}mod_openfire");
 		$row = $sql->FetchArray();
 		$openfire_userserivce_secretkey = $row['secretkey'];
-		$openfire_domain = $row['domain'];		?>
+		$openfire_domain = $row['domain'];
+		?>
 		<body style="margin: 0px; background-color: #FFFFFF">
 		<center>
 		
-	<form style="display:inline;" method="post" name="save" id="save" action="admin.php?action=modulepage&module=<?php echo($this->internal_name); ?>&PHPSESSID=<?php echo(session_id()); ?>">	<?php echo $erfolg; ?>
+	<form style="display:inline;" method="post" name="save" id="save" action="admin.php?action=modulepage&module=<?php echo($this->internal_name); ?>&PHPSESSID=<?php echo(session_id()); ?>">
+	<?php echo $erfolg; ?>
 <table width="90%" cellspacing="1" bgcolor="#999999"" height="106">
  	 <tr>
  	  <td height="19" colspan="2" background="res/lauf.jpg">
@@ -106,7 +129,9 @@ class modopenfire extends b1gMailModul
     <p />b1gMail Openfire-Integration &copy; 2007 - 2008, <a href="http://www.sebijk.com" target="_blank">Home of the Sebijk.com</a>
 </div>
 </form>
-</center></body><?php
+</center>
+</body>
+<?php
 	}
 }
 ?>
